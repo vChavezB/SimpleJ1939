@@ -17,6 +17,6 @@ Installation of the following arduino libraries
 
 ## How to use
 
-Check the examples folder for usage of the API.
+Check the examples folder for usage of the API and the examples from [Copperhill Technologies](https://copperhilltech.com) as the implementation is based off their work.
 
 
