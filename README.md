@@ -6,8 +6,7 @@ The library is based on the work from [Copperhill Technologies](https://copperhi
 
 https://copperhilltech.com/ard1939-sae-j1939-protocol-stack-for-arduino-teensy-esp32/
 
-What was taken from the examples is the parsing of raw CAN frames for transmission and reception. In addition, the code was refactored into C++ and the MCP driver implementation was changed to the library from [Cory Fowler](https://github.com/coryjfowler/MCP_CAN_lib
-) since the examples were using a deprectaed version.
+What was taken from the examples is the parsing of raw CAN frames for transmission and reception. In addition, the code was refactored into C++ and the MCP driver implementation was updated since the examples were using a deprecated API from the [MCP CAN library](https://github.com/coryjfowler/MCP_CAN_lib).
 
 ## Requirements
 
