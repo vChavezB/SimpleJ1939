@@ -48,7 +48,9 @@ byte SimpleJ1939::canReceive(long* lID, unsigned char* pData, int* nDataLen)
                      &CANMsgBuffer[nWritePointer].pData[0]);
 
     if (++nWritePointer == CANMSGBUFFERSIZE)
+    {
       nWritePointer = 0;
+    }
 
   }// end while
 
@@ -60,15 +62,22 @@ byte SimpleJ1939::canReceive(long* lID, unsigned char* pData, int* nDataLen)
     *lID = CANMsgBuffer[nReadPointer].lID;
 
     for (int nIdx = 0; nIdx < *nDataLen; nIdx++)
+    {
       pData[nIdx] = CANMsgBuffer[nReadPointer].pData[nIdx];
+    }
 
     if (++nReadPointer == CANMSGBUFFERSIZE)
+    {
       nReadPointer = 0;
+    }
 
     return 0;
 
   }// end if
-  else return 1;
+  else 
+  {
+	  return 1;
+  }
 
 }// end canReceive
 
@@ -79,10 +88,13 @@ bool SimpleJ1939::PeerToPeer(long lPGN)
 {
   // Check the PGN
   if (lPGN > 0 && lPGN <= 0xEFFF)
+  {
     return true;
-
+  }
   if (lPGN > 0x10000 && lPGN <= 0x1EFFF)
+  {
     return true;
+  }
 
   return false;
 
@@ -94,13 +106,13 @@ bool SimpleJ1939::PeerToPeer(long lPGN)
 byte SimpleJ1939::Transmit(long lPGN, byte nPriority, byte nSrcAddr, byte nDestAddr, byte* nData, int nDataLen)
 {
   // Declarations
-  long lID = ((long)nPriority << 26) + (lPGN << 8) + (long)nSrcAddr;
+  long lID = (static_cast<long>(nPriority)<< 26 + (lPGN << 8) + static_cast<long>(nSrcAddr);
 
   // If PGN represents a peer-to-peer, add destination address to the ID
   if (PeerToPeer(lPGN) == true)
   {
     lID = lID & 0xFFFF00FF;
-    lID = lID | ((long)nDestAddr << 8);
+    lID = lID | (static_cast<long>(nDestAddr) << 8);
 
   }// end if
 
@@ -125,17 +137,17 @@ byte SimpleJ1939::Receive(long* lPGN, byte* nPriority, byte* nSrcAddr, byte *nDe
   if (canReceive(&lID, nData, nDataLen) == 0)
   {
     long lPriority = lID & 0x1C000000;
-    *nPriority = (int)(lPriority >> 26);
+    *nPriority = static_cast<int>(lPriority >> 26);
 
     *lPGN = lID & 0x00FFFF00;
     *lPGN = *lPGN >> 8;
 
     lID = lID & 0x000000FF;
-    *nSrcAddr = (int)lID;
+    *nSrcAddr = static_cast<int>(lID);
 
     if (PeerToPeer(*lPGN) == true)
     {
-      *nDestAddr = (int)(*lPGN & 0xFF);
+      *nDestAddr = static_cast<int>(*lPGN & 0xFF);
       *lPGN = *lPGN & 0x01FF00;
     }
 
