@@ -36,35 +36,17 @@ void setup()
 
 void loop()
 {
-  // Declarations
-  byte nPriority;
-  byte nSrcAddr;
-  byte nDestAddr;
-  byte nData[8];
-  int nDataLen;
-  long lPGN;
-
-  char sString[80];
-
+  long PGN = 0x1234;
+  byte priority = 1;
+  byte srcAddr = 1;
+  byte destAddr = 2;
+  byte payload[8] = {1,2,3,4,5,6,7,8};
+  byte length = 8;
+	
   // Check for received J1939 messages
-  if (J1939.Transmit(&lPGN, &nPriority, &nSrcAddr, &nDestAddr, nData, &nDataLen) == 0)
+  if (J1939.Transmit(PGN, priority, srcAddr, destAddr, &payload[0], length) == 0)
   {
-    sprintf(sString, "PGN: 0x%X Src: 0x%X Dest: 0x%X ", (int)lPGN, nSrcAddr, nDestAddr);
-    Serial.print(sString);
-    if (nDataLen == 0 )
-    {
-      Serial.print("No Data.\n\r");
-    }
-    else
-    {
-      Serial.print("Data: ");
-      for (int nIndex = 0; nIndex < nDataLen; nIndex++)
-      {
-        sprintf(sString, "0x%X ", nData[nIndex]);
-        Serial.print(sString);
-
-      }
-      Serial.print("\n\r");
-    }
+	  Serial.println("Message sent");
   }
+  delay(1000);
 }
