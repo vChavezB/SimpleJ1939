@@ -29,7 +29,7 @@ void setup()
   }
   else
   {
-    Serial.print("CAN Init Failed.\n\r");
+    Serial.print("CAN Init Failed. Check your SPI connections or CAN.begin intialization .\n\r");
     while(1);
   }
 }
