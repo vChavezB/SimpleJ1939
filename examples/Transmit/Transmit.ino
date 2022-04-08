@@ -43,7 +43,6 @@ void loop()
   byte payload[8] = {1,2,3,4,5,6,7,8};
   byte length = 8;
 	
-  // Check for received J1939 messages
   if (J1939.Transmit(PGN, priority, srcAddr, destAddr, &payload[0], length) == 0)
   {
 	  Serial.println("Message sent");
