@@ -106,7 +106,7 @@ bool SimpleJ1939::PeerToPeer(long lPGN)
 byte SimpleJ1939::Transmit(long lPGN, byte nPriority, byte nSrcAddr, byte nDestAddr, byte* nData, int nDataLen)
 {
   // Declarations
-  long lID = static_cast<long>(nPriority)<< 26 + (lPGN << 8) + static_cast<long>(nSrcAddr);
+  long lID = static_cast<long>(nPriority)<< 26 | static_cast<long>(lPGN << 8) | static_cast<long>(nSrcAddr);
 
   // If PGN represents a peer-to-peer, add destination address to the ID
   if (PeerToPeer(lPGN) == true)
